@@ -1,14 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import DropDownSelect from "../components/DropDownSelect/DropDownSelect";
 import {FilterFromBefore} from "../types/filters";
 import DropDownFromTo from "../components/DropDownFormTo/DropDownFormTo";
 import CustomInput from "../components/CustomInput/CustomInput";
 import PictureList from "../components/PictureList/PictureList";
 import {useActions} from "../hooks/useActions";
 import axios from "axios";
-import {IAuthorState} from "../types/author";
-import {ILocationState} from "../types/location";
-import DropDownSelectLocation from "../components/DropDownSelect/DropDownSelectLocation";
+import {IAuthor, IAuthorState} from "../types/author";
+import {ILocation, ILocationState} from "../types/location";
+import styles from './Home.module.scss'
+import DropDownSelect from "../components/DropDownSelect/DropDownSelect";
+import Pagination from "../components/Pagination/Pagination";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 const Home: React.FC = () => {
 	const [author, setAuthor] = useState<IAuthorState>({selected: {id: 0, name: ''}, list: []});
@@ -18,7 +20,7 @@ const Home: React.FC = () => {
 		from: '',
 		before: '',
 	})
-	const [pagination, setPagination] = useState({_page: 1, _limit: 9})
+	const {loading, currentPage, limit} = useTypedSelector(state => state.painting);
 	const {axiosGetPainting} = useActions();
 	
 	const handleChange = useCallback((name: string, value: string): void => {
@@ -35,10 +37,10 @@ const Home: React.FC = () => {
 			locationId: location.selected.id,
 			_gte: fromBefore.from,
 			_lte: fromBefore.before,
-			_page: pagination._page,
-			_limit: pagination._limit,
+			_page: currentPage,
+			_limit: limit,
 		});
-	}, [inputValue, author, location, fromBefore, pagination]);
+	}, [inputValue, author, location, fromBefore, currentPage]);
 	
 	useEffect(() => {
 		async function fetchData() {
@@ -52,19 +54,42 @@ const Home: React.FC = () => {
 	
 	return (
 		<div className="page">
-			<section className="filters">
+			<section className={styles.filters}>
 				<div className="container">
-					<div className="filtersContent">
+					<div className={styles.filtersContent}>
 						<CustomInput placeholder='Name' value={inputValue} setValue={setInputValue}/>
-						<DropDownSelect list={author.list} selectedOption={author.selected} setSelectedOption={setAuthor}/>
-						<DropDownSelectLocation list={location.list} selectedOption={location.selected} setSelectedOption={setLocation}/>
+						<DropDownSelect<IAuthor>
+							list={author.list}
+							selectedOption={author.selected}
+							setSelectedOption={(value) => setAuthor(prev => ({ ...prev, selected: value }))}
+							placeholder="Author"
+							field="name"
+						/>
+						<DropDownSelect<ILocation>
+							list={location.list}
+							selectedOption={location.selected}
+							setSelectedOption={(value) => setLocation(prev => ({ ...prev, selected: value }))}
+							placeholder="Location"
+							field="location"
+						/>
 						<DropDownFromTo values={fromBefore} setValues={handleChange}/>
 					</div>
-					<button onClick={() => setPagination(prev => ({...prev, _page: prev._page - 1}))}>Prev</button>
-					<button onClick={() => setPagination(prev => ({...prev, _page: prev._page + 1}))}>Next</button>
 				</div>
 			</section>
-			<PictureList/>
+			{/*<Pagination/>*/}
+			{loading
+				?
+				<h6 className="loading">Загрузка...</h6>
+				:
+				<>
+					<PictureList/>
+					<section className="pagination">
+						<div className="container">
+							<Pagination/>
+						</div>
+					</section>
+				</>
+			}
 		</div>
 	);
 };

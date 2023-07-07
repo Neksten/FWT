@@ -10,6 +10,7 @@
   }
   .dropDownTop {
     border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: #fff;
     border-radius: 8px;
     height: 45px;
     line-height: 45px;
@@ -51,6 +52,20 @@
       user-select: none;
       padding: 0 15px;
       font-size: 13px;
+    }
+  }
+  &.dark {
+    color: #fff;
+    .dropDownTop, .body {
+      background-color: #000;
+      border: 1px solid #fff;
+    }
+    .body {
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    input {
+      background-color: #fff;
+      color: #000;
     }
   }
 }

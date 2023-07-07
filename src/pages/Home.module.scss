@@ -1,0 +1,12 @@
+.filtersContent {
+  //display: grid;
+  //grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  column-gap: 20px;
+  row-gap: 15px;
+}
+@media (max-width: 768px) {
+  .filtersContent {
+    flex-direction: column;
+  }
+}

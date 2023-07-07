@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import styles from './DropDownFormTo.module.scss';
 import OutsideClickHandler from "../OutsideClickHandler";
 import {ArrowDown} from "../../assets/ArrowDown";
 import {FilterFromBefore} from "../../types/filters";
-
-
+import ThemeContext from "../../context/ThemeContext";
+import {useDispatch} from "react-redux";
+import {setCurrentPageReducerAction} from "../../store/reducers/paintingsReducer";
 
 interface DropDownFromToProps {
 	values: FilterFromBefore;
@@ -12,7 +13,16 @@ interface DropDownFromToProps {
 }
 
 const DropDownFromTo: React.FC<DropDownFromToProps> = ({values, setValues}) => {
+	const dispatch = useDispatch();
 	const [isOpen, setIsOpen] = useState(false);
+	const themeContext = useContext(ThemeContext)
+	
+	if (!themeContext) {
+		return null;
+	}
+	
+	const { isDark } = themeContext;
+	
 	const {from, before} = values
 	
 	// Открытие/закрытие dropdown
@@ -22,17 +32,18 @@ const DropDownFromTo: React.FC<DropDownFromToProps> = ({values, setValues}) => {
 	
 	const handleChange = (name: string, value: string): void => {
 		if (/^\d+$/.test(value) || value === '') {
+			dispatch(setCurrentPageReducerAction(1))
 			setValues(name, value)
 		}
 	};
 	
 	return (
-		<div className={`${styles.dropdown} ${isOpen && styles.open}`}>
+		<div className={`${styles.dropdown} ${isOpen && styles.open} ${isDark && styles.dark}`}>
 			<OutsideClickHandler onOutsideClick={setIsOpen}>
 				<div>
 					<div onClick={toggleDropdown} className={styles.dropDownTop}>
 						<span>Created</span>
-						<ArrowDown/>
+						<ArrowDown color={isDark ? '#fff' : '#000'}/>
 					</div>
 					{isOpen &&
 						<div className={styles.body}>

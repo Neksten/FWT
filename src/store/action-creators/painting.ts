@@ -16,7 +16,7 @@ interface axiosGetPaintingParams {
 	_page: number;
 	_limit:  number;
 }
-// initialParams: axiosGetPaintingParams
+
 export const axiosGetPainting = (initialParams: axiosGetPaintingParams) => {
 	return async (dispatch: Dispatch) => {
 		try {
@@ -24,8 +24,6 @@ export const axiosGetPainting = (initialParams: axiosGetPaintingParams) => {
 			dispatch(axiosPaintingReducerAction());
 			const params = <axiosGetPaintingParams>{
 				q: initialParams.q,
-				_page: initialParams._page,
-				_limit:  initialParams._limit,
 			}
 			
 			if (initialParams._gte !== '') {
@@ -41,11 +39,17 @@ export const axiosGetPainting = (initialParams: axiosGetPaintingParams) => {
 				params.locationId = initialParams.locationId;
 			}
 			
-			// console.log(params)
-			const response = await axios.get('https://test-front.framework.team/paintings', {params});
+			const response = await axios.get('https://test-front.framework.team/paintings', {
+				params: {
+					...params,
+					_page: initialParams._page,
+					_limit:  initialParams._limit,
+				}
+			});
+			const responseAllPaintings = await axios.get('https://test-front.framework.team/paintings', {params});
 			const paintings: IPainting[] = response.data;
 
-			dispatch(axiosPaintingSuccessReducerAction(paintings));
+			dispatch(axiosPaintingSuccessReducerAction({paintings, totalCount: responseAllPaintings.data.length}));
 		} catch (e) {
 			dispatch(axiosPaintingErrorReducerAction('Ошибка при загрузке картин'));
 		}

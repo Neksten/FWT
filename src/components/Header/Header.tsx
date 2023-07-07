@@ -13,18 +13,17 @@ const Header = () => {
 	
 	const { isDark, toggleIsDark} = themeContext;
 	
-	// const a = () => {
-	// 	toggleIsDark()
-	// }
-	console.log(isDark)
+	const changeTheme = () => {
+		toggleIsDark(!isDark)
+	}
 	
 	return (
 		<header className={styles.header}>
 			<div className="container">
 				<div className={styles.headerContent}>
 					<Logo/>
-					<div className={styles.theme} onClick={() => toggleIsDark(!isDark)}>
-						<Sun/>
+					<div className={styles.theme} onClick={changeTheme}>
+						<Sun color={isDark ? '#fff' : '#000'}/>
 					</div>
 				</div>
 			</div>

@@ -16,13 +16,17 @@
       object-fit: cover;
     }
   }
-  .pictureTitle {
+  .pictureInfo {
     position: absolute;
     bottom: 0;
     left: 0;
     display: inline-block;
     width: 100%;
     background: rgba(255,255,255, 0.75);
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+  .pictureTitle {
     font-size: 18px;
     font-weight: 700;
     padding: 5px 15px;

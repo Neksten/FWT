@@ -1,15 +1,15 @@
 import React from 'react';
 import PictureItem from "../PictureItem/PictureItem";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
+import styles from './PictureList.module.scss'
 
 const PictureList = () => {
 	const {painting} = useTypedSelector(state => state.painting);
-	// console.log(painting)
 	
 	return (
-		<section className="pictures">
+		<section className={styles.pictures}>
 			<div className="container">
-				<div className="picturesContent">
+				<div className={styles.picturesContent}>
 					{painting.map(i => (
 						<PictureItem key={i.id} {...i}/>
 					))}

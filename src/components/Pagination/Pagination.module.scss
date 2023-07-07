@@ -1,0 +1,98 @@
+.pagination {
+  max-width: 280px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  .paginationArrowsPrev, .paginationArrowsNext, .paginationPages {
+    display: flex;
+    align-items: center;
+  }
+  .paginationArrowsPrev {
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #000;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-right: none;
+    .paginationItem:last-child {
+      border-right: none;
+    }
+    .paginationItem:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+  }
+  .paginationItem {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #000;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background-color: #EDEDED;
+    }
+  }
+  .paginationPages {
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #000;
+    .paginationItem:first-child {
+      border-left: 1px solid #000;
+    }
+    .currentPage {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+  .paginationArrowsNext {
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #000;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left: none;
+    .paginationItem:last-child {
+      border-right: none;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+  }
+  .paginationArrowsNext.hide, .paginationArrowsPrev.hide {
+    opacity: 0.3;
+    & .paginationItem:hover {
+      background-color: #fff;
+    }
+  }
+  &.dark {
+    color: #fff;
+    * {
+      border-color: #fff;
+      path {
+        fill: #fff;
+      }
+    }
+    .paginationItem {
+      &:hover {
+        background-color: #464646;
+      }
+    }
+    .paginationPages {
+      .paginationItem:first-child {
+        border-color: #fff;
+      }
+      .currentPage {
+        background-color: #fff;
+        color: #000;
+      }
+    }
+    .paginationArrowsNext.hide, .paginationArrowsPrev.hide {
+      & .paginationItem:hover {
+        background-color: #000;
+      }
+    }
+  }
+}

@@ -24,6 +24,19 @@
     cursor: pointer;
     font-size: 13px;
     column-gap: 10px;
+    background-color: #fff;
+    //white-space: nowrap;
+    //overflow: hidden;
+    //span {
+    //  white-space: nowrap;
+    //  max-width: 120px;
+    //  overflow: hidden;
+    //}
+    .dropDownTopManagement {
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
+    }
   }
   .bodyWrap {
     position: absolute;
@@ -62,6 +75,16 @@
       display: flex;
       align-items: center;
       font-size: 16px;
+    }
+  }
+  &.dark {
+    color: #fff;
+    .dropDownTop, .bodyWrap {
+      background-color: #000;
+      border: 1px solid #fff;
+    }
+    .bodyWrap {
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
     }
   }
 }
