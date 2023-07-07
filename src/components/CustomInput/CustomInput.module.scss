@@ -1,0 +1,16 @@
+.input {
+  padding: 0 15px;
+  column-gap: 10px;
+  width: 100%;
+  border-radius: 8px;
+  height: 45px;
+  line-height: 45px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  &:focus {
+    border: 1px solid rgba(0, 0, 0, 1);
+  }
+}
