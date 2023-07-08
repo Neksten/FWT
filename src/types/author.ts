@@ -1,9 +1,9 @@
 export interface IAuthorState {
-	selected: IAuthor;
-	list: IAuthor[];
+  selected: IAuthor;
+  list: IAuthor[];
 }
 
 export interface IAuthor {
-	id: number;
-	name: string;
+  id: number;
+  name: string;
 }

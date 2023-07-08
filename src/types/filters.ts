@@ -1,4 +1,4 @@
 export interface FilterFromBefore {
-	from: string,
-	before: string,
+  from: string;
+  before: string;
 }

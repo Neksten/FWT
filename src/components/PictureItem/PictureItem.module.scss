@@ -1,10 +1,16 @@
 .picture {
-  //width: 360px;
   width: 100%;
-  //height: 275px;
   height: 100%;
   position: relative;
   border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  &:hover {
+    .pictureInfo {
+      padding-bottom: 44px;
+      bottom: 0;
+    }
+  }
   .pictureImage {
     width: 100%;
     height: 100%;
@@ -18,17 +24,38 @@
   }
   .pictureInfo {
     position: absolute;
-    bottom: 0;
+    bottom: -75px;
     left: 0;
     display: inline-block;
     width: 100%;
     background: rgba(255,255,255, 0.75);
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
+    padding: 5px 15px;
+    transition: all 0.5s ease-in-out;
   }
   .pictureTitle {
     font-size: 18px;
+    line-height: 30px;
     font-weight: 700;
-    padding: 5px 15px;
+  }
+  .pictureInfoItems {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .pictureInfoItem {
+    display: flex;
+    font-size: 13px;
+    span {
+      line-height: 20px;
+    }
+    span:first-child {
+      font-weight: 500;
+    }
+    span:last-child {
+      font-weight: 300;
+      margin-left: 4px;
+    }
   }
 }

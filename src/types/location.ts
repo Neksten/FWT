@@ -1,9 +1,9 @@
 export interface ILocationState {
-	selected: ILocation;
-	list: ILocation[];
+  selected: ILocation;
+  list: ILocation[];
 }
 
 export interface ILocation {
-	id: number;
-	location: string;
+  id: number;
+  location: string;
 }

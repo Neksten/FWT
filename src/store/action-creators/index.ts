@@ -1,5 +1,7 @@
 import * as PaintingActionCreator from './painting';
 
-export default {
-	...PaintingActionCreator,
+const actions = {
+  ...PaintingActionCreator,
 };
+
+export default actions;

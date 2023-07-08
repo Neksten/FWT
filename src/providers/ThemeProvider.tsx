@@ -1,24 +1,21 @@
-import React, {useState} from "react";
-import ThemeContext, {ThemeContextType} from "../context/ThemeContext";
+import React, { useState } from 'react';
+
+import ThemeContext, { ThemeContextType } from '../context/ThemeContext';
 
 interface ThemeProviderProps {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
-	const [isDark, setIsDark] = useState(false);
-	
-	// Значение контекста
-	const themeContextValue: ThemeContextType = {
-		isDark,
-		toggleIsDark: setIsDark,
-	};
-	
-	return (
-		<ThemeContext.Provider value={themeContextValue}>
-			{children}
-		</ThemeContext.Provider>
-	);
-}
+const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+  const [isDark, setIsDark] = useState<boolean>(false);
 
-export default ThemeProvider
+  // Значение контекста
+  const themeContextValue: ThemeContextType = {
+    isDark,
+    toggleIsDark: setIsDark,
+  };
+
+  return <ThemeContext.Provider value={themeContextValue}>{children}</ThemeContext.Provider>;
+};
+
+export default ThemeProvider;

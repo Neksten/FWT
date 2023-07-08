@@ -1,5 +1,4 @@
 .dropdown {
-  width: 100%;
   position: relative;
   &.open {
     .dropDownTop {
@@ -26,6 +25,7 @@
   .body {
     display: flex;
     align-items: center;
+    row-gap: 15px;
     position: absolute;
     top: 44px;
     left: 0;
@@ -66,6 +66,22 @@
     input {
       background-color: #fff;
       color: #000;
+    }
+  }
+  @media (min-width: 768px) {
+    .body {
+      flex-direction: column;
+    }
+    input {
+      width: 110px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .body {
+      flex-direction: row;
+    }
+    input {
+      width: 100%;
     }
   }
 }
