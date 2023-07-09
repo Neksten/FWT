@@ -46,7 +46,9 @@ const DropDownFromTo: React.FC<DropDownFromToProps> = ({ values, setValues }) =>
         <div>
           <div onClick={toggleDropdown} className={styles.dropDownTop}>
             <span>Created</span>
-            <ArrowDown color={isDark ? '#fff' : '#000'} />
+            <div className={styles.arrow}>
+              <ArrowDown color={isDark ? '#fff' : '#000'} />
+            </div>
           </div>
           {isOpen && (
             <div className={styles.body}>

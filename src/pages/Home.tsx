@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
+import { setLimitPageReducerAction } from '../store/reducers/paintingsReducer';
 import { FilterFromBefore } from '../types/filters';
 import DropDownFromTo from '../components/DropDownFormTo/DropDownFormTo';
 import CustomInput from '../components/CustomInput/CustomInput';
@@ -18,6 +20,7 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import styles from './Home.module.scss';
 
 const Home: React.FC = () => {
+  const dispatch = useDispatch();
   const [author, setAuthor] = useState<IAuthorState>({ selected: { id: 0, name: '' }, list: [] });
   const [location, setLocation] = useState<ILocationState>({ selected: { id: 0, location: '' }, list: [] });
   const [inputValue, setInputValue] = useState<string>('');
@@ -50,13 +53,25 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     (async function () {
-      const authorsResponse = await axios.get('https://test-front.framework.team/authors');
-      const locationsResponse = await axios.get('https://test-front.framework.team/locations');
-      setAuthor((prev) => ({ ...prev, list: authorsResponse.data }));
-      setLocation((prev) => ({ ...prev, list: locationsResponse.data }));
-    })();
-  }, []);
+      try {
+        const [authorsResponse, locationsResponse] = await Promise.all([
+          axios.get('https://test-front.framework.team/authors'),
+          axios.get('https://test-front.framework.team/locations'),
+        ]);
 
+        setAuthor((prev) => ({ ...prev, list: authorsResponse.data }));
+        setLocation((prev) => ({ ...prev, list: locationsResponse.data }));
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log('Error fetching data:', e);
+      }
+    })();
+
+    if (window.innerWidth > 768) {
+      dispatch(setLimitPageReducerAction(9));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="page">
       <section className={styles.filters}>

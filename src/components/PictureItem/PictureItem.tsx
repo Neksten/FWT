@@ -8,23 +8,30 @@ import { ILocation } from '../../types/location';
 
 import styles from './PictureItem.module.scss';
 
-type infoPicture = {
+type InfoPicture = {
   author: IAuthor;
   location: ILocation;
 };
 
-const PictureItem: React.FC<IPainting> = (props) => {
-  const [infoPicture, setInfoPicture] = useState<infoPicture>({
-    author: { id: 0, name: '' },
-    location: { id: 0, location: '' },
-  });
+const PictureItem: React.FC<IPainting> = React.memo((props) => {
+  const [infoPicture, setInfoPicture] = useState<InfoPicture | null>(null);
 
   useEffect(() => {
     (async function () {
-      const authorResponse = await axios.get(`https://test-front.framework.team/authors/${props.authorId}`);
-      const locationResponse = await axios.get(`https://test-front.framework.team/locations/${props.locationId}`);
-      setInfoPicture((prev) => ({ ...prev, author: authorResponse.data }));
-      setInfoPicture((prev) => ({ ...prev, location: locationResponse.data }));
+      try {
+        const [authorResponse, locationResponse] = await Promise.all([
+          axios.get(`https://test-front.framework.team/authors/${props.authorId}`),
+          axios.get(`https://test-front.framework.team/locations/${props.locationId}`),
+        ]);
+
+        setInfoPicture({
+          author: authorResponse.data,
+          location: locationResponse.data,
+        });
+      } catch (e) {
+        // eslint-disable-next-line
+        console.log('Error fetching data:', e);
+      }
     })();
   }, [props.authorId, props.locationId]);
 
@@ -38,7 +45,7 @@ const PictureItem: React.FC<IPainting> = (props) => {
         <div className={styles.pictureInfoItems}>
           <div className={styles.pictureInfoItem}>
             <span>Author:</span>
-            <span>{infoPicture.author.name}</span>
+            <span>{infoPicture?.author.name}</span>
           </div>
           <div className={styles.pictureInfoItem}>
             <span>Crated:</span>
@@ -46,12 +53,12 @@ const PictureItem: React.FC<IPainting> = (props) => {
           </div>
           <div className={styles.pictureInfoItem}>
             <span>Location:</span>
-            <span>{infoPicture.location.location}</span>
+            <span>{infoPicture?.location.location}</span>
           </div>
         </div>
       </div>
     </div>
   );
-};
+});
 
 export default PictureItem;

@@ -9,7 +9,7 @@ import {
   axiosPaintingSuccessReducerAction,
 } from '../reducers/paintingsReducer';
 
-interface axiosGetPaintingParams {
+interface AxiosGetPaintingParams {
   q: string;
   authorId: number;
   locationId: number;
@@ -19,27 +19,18 @@ interface axiosGetPaintingParams {
   _limit: number;
 }
 
-export const axiosGetPainting = (initialParams: axiosGetPaintingParams) => {
+export const axiosGetPainting = (initialParams: AxiosGetPaintingParams) => {
   return async (dispatch: Dispatch) => {
     try {
       // получаем данные(загрузка)
       dispatch(axiosPaintingReducerAction());
-      const params = {
+      const params: AxiosGetPaintingParams = {
         q: initialParams.q,
-      } as axiosGetPaintingParams;
-
-      if (initialParams.created_gte !== '') {
-        params.created_gte = initialParams.created_gte;
-      }
-      if (initialParams.created_lte !== '') {
-        params.created_lte = initialParams.created_lte;
-      }
-      if (initialParams.authorId !== 0) {
-        params.authorId = initialParams.authorId;
-      }
-      if (initialParams.locationId !== 0) {
-        params.locationId = initialParams.locationId;
-      }
+        ...(initialParams.created_gte !== '' && { created_gte: initialParams.created_gte }),
+        ...(initialParams.created_lte !== '' && { created_lte: initialParams.created_lte }),
+        ...(initialParams.authorId !== 0 && { authorId: initialParams.authorId }),
+        ...(initialParams.locationId !== 0 && { locationId: initialParams.locationId }),
+      } as AxiosGetPaintingParams;
 
       const response = await axios.get('https://test-front.framework.team/paintings', {
         params: {
@@ -48,10 +39,10 @@ export const axiosGetPainting = (initialParams: axiosGetPaintingParams) => {
           _limit: initialParams._limit,
         },
       });
-      const responseAllPaintings = await axios.get('https://test-front.framework.team/paintings', { params });
       const paintings: IPainting[] = response.data;
+      const totalCount: number = Number(response.headers['x-total-count']);
 
-      dispatch(axiosPaintingSuccessReducerAction({ paintings, totalCount: responseAllPaintings.data.length }));
+      dispatch(axiosPaintingSuccessReducerAction({ paintings, totalCount: totalCount }));
     } catch (e) {
       dispatch(axiosPaintingErrorReducerAction('Ошибка при загрузке картин'));
     }

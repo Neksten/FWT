@@ -18,6 +18,7 @@ const Header = () => {
 
   const changeTheme = () => {
     toggleIsDark(!isDark);
+    localStorage.setItem('isDark', JSON.stringify(!isDark));
   };
 
   return (

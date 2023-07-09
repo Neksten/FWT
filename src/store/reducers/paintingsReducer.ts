@@ -7,6 +7,7 @@ import {
   PaintingActionTypes,
   PaintingState,
   SetCurrentPageAction,
+  SetLimitPageAction,
 } from '../../types/painting';
 
 const initialState: PaintingState = {
@@ -14,7 +15,7 @@ const initialState: PaintingState = {
   loading: false,
   error: null,
   currentPage: 1,
-  limit: 9,
+  limit: 12,
   totalCount: 0,
 };
 
@@ -33,6 +34,8 @@ export const paintingsReducer = (state = initialState, action: PaintingAction): 
       return { ...state, loading: false, error: action.payload };
     case PaintingActionTypes.SET_CURRENT_PAGE:
       return { ...state, loading: false, currentPage: action.payload };
+    case PaintingActionTypes.SET_LIMIT_PAGE:
+      return { ...state, loading: false, limit: action.payload };
     default:
       return state;
   }
@@ -52,5 +55,9 @@ export const axiosPaintingErrorReducerAction = (payload: string): AxiosPaintingE
 });
 export const setCurrentPageReducerAction = (payload: number): SetCurrentPageAction => ({
   type: PaintingActionTypes.SET_CURRENT_PAGE,
+  payload,
+});
+export const setLimitPageReducerAction = (payload: number): SetLimitPageAction => ({
+  type: PaintingActionTypes.SET_LIMIT_PAGE,
   payload,
 });

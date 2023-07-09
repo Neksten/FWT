@@ -7,7 +7,9 @@ interface ThemeProviderProps {
 }
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [isDark, setIsDark] = useState<boolean>(false);
+  const initialThemeValue = localStorage.getItem('isDark');
+  const parsedInitialThemeValue = initialThemeValue !== null ? JSON.parse(initialThemeValue) : null;
+  const [isDark, setIsDark] = useState<boolean | null>(parsedInitialThemeValue);
 
   // Значение контекста
   const themeContextValue: ThemeContextType = {

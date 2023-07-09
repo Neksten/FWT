@@ -19,6 +19,7 @@ export enum PaintingActionTypes {
   AXIOS_PAINTING_SUCCESS = 'AXIOS_PAINTING_SUCCESS',
   AXIOS_PAINTING_ERROR = 'AXIOS_PAINTING_ERROR',
   SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
+  SET_LIMIT_PAGE = 'SET_LIMIT_PAGE',
 }
 
 // запрос
@@ -47,8 +48,15 @@ export interface SetCurrentPageAction {
   payload: number;
 }
 
+// изменить лимит
+export interface SetLimitPageAction {
+  type: PaintingActionTypes.SET_LIMIT_PAGE;
+  payload: number;
+}
+
 export type PaintingAction =
   | AxiosPaintingAction
   | AxiosPaintingSuccessAction
   | AxiosPaintingErrorAction
-  | SetCurrentPageAction;
+  | SetCurrentPageAction
+  | SetLimitPageAction;

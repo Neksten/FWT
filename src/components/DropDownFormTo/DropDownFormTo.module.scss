@@ -6,6 +6,12 @@
       border-bottom-right-radius: 0;
       border: 1px solid #000000;
     }
+    .arrow {
+      transform: rotate(180deg) scaleX(-1) translateY(-2px);
+    }
+  }
+  .arrow {
+    transition: all 0.05s ease;
   }
   .dropDownTop {
     border: 1px solid rgba(0, 0, 0, 0.3);
