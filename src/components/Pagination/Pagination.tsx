@@ -34,19 +34,37 @@ const Pagination: React.FC = () => {
 
   const handleClickPrev = () => {
     if (currentPage !== 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       dispatch(setCurrentPageReducerAction(currentPage - 1));
+    }
+  };
+  const handleClickAllPrev = () => {
+    if (currentPage !== 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      dispatch(setCurrentPageReducerAction(1));
     }
   };
   const handleClickNext = () => {
     if (currentPage < pagesCount) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       dispatch(setCurrentPageReducerAction(currentPage + 1));
     }
+  };
+  const handleClickAllNext = () => {
+    if (currentPage < pagesCount) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      dispatch(setCurrentPageReducerAction(pagesCount));
+    }
+  };
+  const handleClickPage = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    dispatch(setCurrentPageReducerAction(page));
   };
 
   return (
     <div className={`${styles.pagination} ${isDark && styles.dark}`}>
       <div className={`${styles.paginationArrowsPrev} ${currentPage === 1 && styles.hide}`}>
-        <div className={styles.paginationItem} onClick={() => dispatch(setCurrentPageReducerAction(1))}>
+        <div className={styles.paginationItem} onClick={handleClickAllPrev}>
           <ArrowAllPrev />
         </div>
         <div className={styles.paginationItem} onClick={handleClickPrev}>
@@ -58,7 +76,7 @@ const Pagination: React.FC = () => {
           <div
             key={idx}
             className={`${styles.paginationItem} ${currentPage === i && styles.currentPage}`}
-            onClick={() => dispatch(setCurrentPageReducerAction(i))}
+            onClick={() => handleClickPage(i)}
           >
             {i}
           </div>
@@ -68,7 +86,7 @@ const Pagination: React.FC = () => {
         <div className={styles.paginationItem} onClick={handleClickNext}>
           <ArrowNext />
         </div>
-        <div className={styles.paginationItem} onClick={() => dispatch(setCurrentPageReducerAction(pagesCount))}>
+        <div className={styles.paginationItem} onClick={handleClickAllNext}>
           <ArrowAllNext />
         </div>
       </div>
